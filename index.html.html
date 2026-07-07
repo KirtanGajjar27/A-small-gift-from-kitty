@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>A Gift For You</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+overflow:hidden;
+font-family:Georgia,serif;
+background:linear-gradient(135deg,#fffdf7,#fff7df,#f6e3a1,#fffdf8);
+height:100vh;
+}
+#overlay{
+position:fixed;inset:0;
+display:flex;justify-content:center;align-items:center;
+background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(255,244,210,.98));
+z-index:10;flex-direction:column;
+transition:.8s;
+}
+h1{color:#9a6b00;margin-bottom:25px}
+button{
+padding:18px 42px;
+font-size:22px;
+border:none;border-radius:40px;
+background:linear-gradient(45deg,#d4af37,#f9e27d,#c79a00);
+cursor:pointer;
+box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+button:hover{transform:scale(1.05)}
+#garden{position:absolute;inset:0}
+.flower{
+position:absolute;
+font-size:82px;
+opacity:0;
+transform:translateY(60px) scale(.2);
+animation:bloom 2s forwards;
+filter:drop-shadow(0 0 12px rgba(255,215,0,.55));
+}
+@keyframes bloom{
+to{opacity:1;transform:translateY(0) scale(1);}
+}
+.spark{
+position:absolute;
+width:8px;height:8px;
+border-radius:50%;
+background:gold;
+animation:float 7s linear infinite;
+opacity:.4;
+}
+@keyframes float{
+from{transform:translateY(100vh)}
+to{transform:translateY(-20vh)}
+}
+</style>
+</head>
+<body>
+
+<div id="overlay">
+<h1>🎁 Here's Your Gift</h1>
+<button onclick="showGarden()">Open Gift</button>
+</div>
+
+<div id="garden"></div>
+
+<script>
+const garden=document.getElementById("garden");
+
+for(let i=0;i<60;i++){
+ let s=document.createElement("div");
+ s.className="spark";
+ s.style.left=Math.random()*100+"vw";
+ s.style.top=Math.random()*100+"vh";
+ s.style.animationDelay=(Math.random()*7)+"s";
+ s.style.animationDuration=(5+Math.random()*5)+"s";
+ garden.appendChild(s);
+}
+
+const flowers=[
+["🌻",8,65],["🤍",20,55],["🌻",32,68],["🤍",44,48],
+["🌻",56,72],["🤍",68,56],["🌻",80,65],
+["🤍",16,82],["🌻",38,86],["🤍",60,84],
+["🌻",75,88],["🤍",90,80]
+];
+
+function showGarden(){
+ document.getElementById("overlay").style.opacity=0;
+ setTimeout(()=>document.getElementById("overlay").style.display="none",700);
+
+ flowers.forEach((f,i)=>{
+   setTimeout(()=>{
+      let d=document.createElement("div");
+      d.className="flower";
+      d.textContent=f[0];
+      d.style.left=f[1]+"vw";
+      d.style.top=f[2]+"vh";
+      garden.appendChild(d);
+   },i*350);
+ });
+}
+</script>
+
+</body>
+</html>
